@@ -11,7 +11,7 @@
 #include "finder.hpp"
 
 int main() {
-    int nVtx = 25, nCol = 5;
+    int nVtx = 49, nCol = 7;
     Graph *g = new Graph {nVtx, nCol};
     
     std::random_device rd;
@@ -24,14 +24,14 @@ int main() {
         g->iniVtxes(i, std::abs(dist(gen)));
         
         if (j < nRow) {
-            g->addEdges(i, i+5, dist(gen));
+            g->addEdges(i, i+nCol, dist(gen));
             
             if (j % 2) {
-                if (i % 10 != 0)
-                    g->addEdges(i, i+4, dist(gen));
+                if (i % (nCol * 2) != 0)
+                    g->addEdges(i, i+nCol-1, dist(gen));
             } else {
-                if (i % 9 != 0)
-                    g->addEdges(i, i+6, dist(gen));
+                if (i % (nCol * 2 - 1) != 0)
+                    g->addEdges(i, i+nCol+1, dist(gen));
             }
             
             (i + 1) % nCol ?: ++j;
@@ -43,8 +43,8 @@ int main() {
     g->printEdges();
     std::cout << std::endl << std::endl;
     
-    int src = 0, dst = 23;
-    Finder *f = new Finder {src, dst, g};
+    int src = 0, dst = 48;
+    Finder *f = new Finder {src < nVtx-nCol ? src : nVtx-nCol-1, dst < nVtx ? dst : nVtx-1, g};
     
     f->runVtxAlgo();
     

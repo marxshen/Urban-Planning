@@ -30,6 +30,11 @@ Finder::~Finder() {
     delete _eDist;
     delete _vTrace;
     delete _eTrace;
+    
+    _vDist = nullptr;
+    _eDist = nullptr;
+    _vTrace = nullptr;
+    _eTrace = nullptr;
 }
 
 const caches& Finder::getVtxDist() const {
@@ -122,28 +127,28 @@ void Finder::_DPAlgorithm() {
 
         if (row % 2 == 0)
             if (i == nCol * row - 1) {
-                (*_vTrace)[i] = i - 5;
-                (*_vDist)[i] = (*_vDist)[i-5] + (*vtxes)[i];
+                (*_vTrace)[i] = i - nCol;
+                (*_vDist)[i] = (*_vDist)[i-nCol] + (*vtxes)[i];
             } else {
-                if ((*_vDist)[i-4] + (*vtxes)[i] < (*_vDist)[i-5] + (*vtxes)[i]) {
-                    (*_vTrace)[i] = i - 4;
-                    (*_vDist)[i] = (*_vDist)[i-4] + (*vtxes)[i];
+                if ((*_vDist)[i-nCol+1] + (*vtxes)[i] < (*_vDist)[i-nCol] + (*vtxes)[i]) {
+                    (*_vTrace)[i] = i - nCol + 1;
+                    (*_vDist)[i] = (*_vDist)[i-nCol+1] + (*vtxes)[i];
                 } else {
-                    (*_vTrace)[i] = i - 5;
-                    (*_vDist)[i] = (*_vDist)[i-5] + (*vtxes)[i];
+                    (*_vTrace)[i] = i - nCol;
+                    (*_vDist)[i] = (*_vDist)[i-nCol] + (*vtxes)[i];
                 }
             }
         else
             if (i == nCol * (row - 1)) {
-                (*_vTrace)[i] = i - 5;
-                (*_vDist)[i] = (*_vDist)[i-5] + (*vtxes)[i];
+                (*_vTrace)[i] = i - nCol;
+                (*_vDist)[i] = (*_vDist)[i-nCol] + (*vtxes)[i];
             } else {
-                if ((*_vDist)[i-5] + (*vtxes)[i] < (*_vDist)[i-6] + (*vtxes)[i]) {
-                    (*_vTrace)[i] = i - 5;
-                    (*_vDist)[i] = (*_vDist)[i-5] + (*vtxes)[i];
+                if ((*_vDist)[i-nCol] + (*vtxes)[i] < (*_vDist)[i-nCol-1] + (*vtxes)[i]) {
+                    (*_vTrace)[i] = i - nCol;
+                    (*_vDist)[i] = (*_vDist)[i-nCol] + (*vtxes)[i];
                 } else {
-                    (*_vTrace)[i] = i - 6;
-                    (*_vDist)[i] = (*_vDist)[i-6] + (*vtxes)[i];
+                    (*_vTrace)[i] = i - nCol - 1;
+                    (*_vDist)[i] = (*_vDist)[i-nCol-1] + (*vtxes)[i];
                 }
             }
     }
@@ -157,7 +162,7 @@ void Finder::_DPAlgorithm() {
 
 void Finder::_DPBestRoute() const {
     std::stack<int> route;
-    
+
     for (int i = _dst; i != -1; i = (*_vTrace)[i])
         route.push(i);
     
@@ -166,7 +171,7 @@ void Finder::_DPBestRoute() const {
         route.pop();
         
         if (vtx == _dst)
-            std::cout << vtx << " (" << (*_vDist)[vtx] << ")";
+            std::cout << vtx << " (" << (*_vDist)[vtx] << ") ";
         else
             std::cout << vtx << " (" << (*_vDist)[vtx] << ") -> ";
     }
