@@ -1,30 +1,16 @@
 # Urban-Planning
 
-Designers plan a graph with edges and vertices connected in a grid pattern.
+Designers plan a graph with edges and vertices connected in a grid pattern.<br/>
+Vertices exist at each intersection.<br/>
+Also, vertices and edges have specific weights.<br/>
+There are precisely n * n vertices.<br/>
 
+A variable vDist[i] stores the weight of each vertex.<br/>
+Also, a variable eDist[i] stores the weight of each edge.<br/>
 
-The vertices exist at each intersection. Also, vertices and edges have specific weights.
+The planners can denote its source in any of the lots, L1 to Ln,<br/>
+which are adjacent to vertices in the first column.<br/>
+On the other side of the graph are their n targets, R1 to Rn.<br/>
 
-
-There are exactly n*n vertices. By default, n = 5.
-
-
-The variable vDist(i) stores The weight of each vertex.
-
-
-Also,  the variable eDist(i) stores the weight of each edge.
-
-
-The planners can denote its source in any of the lots, L1 to Ln,
-
-
-which are adjacent to the vertices in the first column.
-
-
-On the other side of the graph are their n targets, R1 to Rn.
-
-
-The planners would like to denote their sources to allow for paths to targets with minimum weights.
-
-
-The goal is to determine the locations of their sources, and the best routes to targets.
+The planners would like to denote their sources to allow for paths to targets with minimum weights.<br/>
+The goal is to determine the locations of their sources and the best routes to the targets.<br/>
